@@ -2,9 +2,10 @@ require("dotenv").config();
 var keys = require("./keys.js");
 var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
+var Spotify = require('node-spotify-api');
 
 
-var spotifycall = new spotifycall();
+var spotify = new spotify(keys.spotify);
 
 var search = process.argv[2];
 var term = process.argv.slice(3).join(" ");
@@ -31,3 +32,49 @@ if (!search) {
   }
   
 
+  this.findShow = function(show) {
+    var URL = "http://api.tvmaze.com/singlesearch/shows?q=" + show;
+
+    axios.get(URL).then(function(response) {
+      // Place the response.data into a variable, jsonData.
+      var jsonData = response.data;
+
+      // showData ends up being the string containing the show data we will print to the console
+      var showData = [
+        "Show: " + jsonData.name,
+        "Genre(s): " + jsonData.genres.join(", "),
+        "Rating: " + jsonData.rating.average,
+        "Network: " + jsonData.network.name,
+        "Summary: " + jsonData.summary
+      ].join("\n\n");
+
+      // Append showData and the divider to log.txt, print showData to the console
+      fs.appendFile("log.txt", showData + divider, function(err) {
+        if (err) throw err;
+        console.log(showData);
+      });
+    });
+  };
+
+
+run(spotifySong);
+  function spotifySong() {
+    if( !userPick ){
+        userPick = "the sign by ace of base"
+   };
+
+    spotify.search({ type: 'track', query: userPick }, function(err, data) {
+        if ( err ) {
+            log.info('Error occurred: ' + err);
+            return;
+        };
+
+        var data = data.tracks.items
+
+        log.info("========================")
+        log.info("The Artist is: " + data[0].artists[0].name);
+        log.info("The song title is: " + data[0].name);
+        log.info("Preview Link: " + data[0].preview_url);
+        log.info("The album title is: " +data[0].album.name);          
+    });
+ };
