@@ -33,7 +33,7 @@ if (!search) {
   
 
   this.findShow = function(show) {
-    var URL = "http://api.tvmaze.com/singlesearch/shows?q=" + show;
+    var URL = "https://www.npmjs.com/package/node-spotify-api" + show;
 
     axios.get(URL).then(function(response) {
       // Place the response.data into a variable, jsonData.
@@ -41,11 +41,10 @@ if (!search) {
 
       // showData ends up being the string containing the show data we will print to the console
       var showData = [
-        "Show: " + jsonData.name,
-        "Genre(s): " + jsonData.genres.join(", "),
-        "Rating: " + jsonData.rating.average,
-        "Network: " + jsonData.network.name,
-        "Summary: " + jsonData.summary
+        "Artist Name " + data[0].artists[0].name,
+        "Song Name:  " + data[0].name,
+        "Preview URL " + data[0].preview_url,
+        "Song Album " + data[0].album.name,
       ].join("\n\n");
 
       // Append showData and the divider to log.txt, print showData to the console
