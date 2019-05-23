@@ -72,7 +72,7 @@ function getMyBands(userPick) {
 
   axios.get("https://rest.bandsintown.com/artists/" + newsearch + "/events?app_id=codingbootcamp")
     .then(function (response) {
-      console.log(response.data[0].venue.name);
+      console.log(response.data[0]);
     })
     .catch(function(error){
       console.log("error")
